@@ -1,0 +1,11 @@
+# Fichiers sources (Illustrator, photo originale) : gardés en local uniquement
+design/
+
+# Fichiers système
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Éditeurs
+.vscode/
+.idea/
