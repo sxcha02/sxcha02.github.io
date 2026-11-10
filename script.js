@@ -1,16 +1,24 @@
 // ------------------- Modal de contact -------------------
 
-// Adresse qui recevra les messages
-const CONTACT_EMAIL = "s.massot02@gmail.com";
+// Envoi via Web3Forms (service gratuit, pas de serveur nécessaire)
+const FORM_ENDPOINT = "https://api.web3forms.com/submit";
 
 const modal = document.getElementById("contact-modal");
 const openBtn = document.getElementById("open-contact-modal");
 const closeBtn = document.getElementById("close-contact-modal");
 const form = document.getElementById("contact-form");
+const statusEl = document.getElementById("contact-status");
+
+function setStatus(message, type) {
+    statusEl.textContent = message;
+    statusEl.classList.remove("is-success", "is-error");
+    if (type) statusEl.classList.add(`is-${type}`);
+}
 
 // Le modal n'existe que sur l'accueil : on ne branche rien sur les autres pages
 if (modal) {
     openBtn.addEventListener("click", () => {
+        setStatus("");
         modal.showModal();
     });
 
@@ -25,19 +33,38 @@ if (modal) {
         }
     });
 
-    // Pas de serveur : on ouvre la messagerie avec le message pré-rempli
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
+        const submitBtn = form.querySelector(".contact-submit");
         const data = new FormData(form);
-        const subject = `Contact portfolio – ${data.get("name")}`;
-        const body = `${data.get("message")}\n\n${data.get("name")} (${data.get("email")})`;
+        data.set("subject", `Contact portfolio – ${data.get("name")}`);
 
-        window.location.href =
-            `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Envoi…";
+        setStatus("");
 
-        form.reset();
-        modal.close();
+        try {
+            const response = await fetch(FORM_ENDPOINT, {
+                method: "POST",
+                headers: { Accept: "application/json" },
+                body: data,
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Échec de l'envoi");
+            }
+
+            setStatus("Merci, ton message a bien été envoyé !", "success");
+            form.reset();
+            setTimeout(() => modal.close(), 2000);
+        } catch (error) {
+            setStatus("Oups, l'envoi a échoué. Réessaie dans un instant.", "error");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Envoyer";
+        }
     });
 }
 

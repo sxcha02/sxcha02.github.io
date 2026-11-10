@@ -168,6 +168,13 @@
                     <button type="button" class="contact-modal-close" id="close-contact-modal" aria-label="Fermer">&times;</button>
                 </div>
 
+                <!-- Web3Forms : clé d'accès publique (https://web3forms.com) -->
+                <input type="hidden" name="access_key" value="07774605-573e-4e54-91fb-3a01630b13a6">
+                <input type="hidden" name="subject" value="Nouveau message depuis le portfolio">
+                <input type="hidden" name="from_name" value="Portfolio">
+                <!-- Piège anti-spam : invisible pour les humains -->
+                <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                 <label class="contact-field">
                     <span>Nom</span>
                     <input type="text" name="name" required autocomplete="name">
@@ -182,6 +189,7 @@
                 </label>
 
                 <button type="submit" class="contact-button contact-submit">Envoyer</button>
+                <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
             </form>
         </dialog>
     </main>

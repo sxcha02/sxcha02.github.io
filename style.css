@@ -893,6 +893,39 @@ nav::before {
     color: var(--color-secondary);
 }
 
+.contact-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.contact-status {
+    min-height: 1.25rem;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.contact-status.is-success {
+    color: #7fd69b;
+}
+
+.contact-status.is-error {
+    color: #ff8a80;
+}
+
+/* masqué visuellement (honeypot anti-spam) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* ------------------- Footer ------------------- */
 
 .footer {
