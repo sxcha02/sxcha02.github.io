@@ -782,8 +782,16 @@ nav::before {
 
 /* ------------------- Modal de contact ------------------- */
 
+/* ouvert avec show() (et pas showModal()) pour que la fenêtre hCaptcha puisse passer devant :
+   le centrage, le fond et la superposition sont donc gérés ici */
 .contact-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 950; /* au-dessus de la navbar, sous le curseur (1000) et sous hCaptcha */
     width: min(520px, calc(100% - 2rem));
+    height: fit-content;
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
     margin: auto;
     padding: 2.5rem;
     border: 1px solid var(--color-line);
@@ -792,9 +800,26 @@ nav::before {
     color: var(--color-secondary);
 }
 
-.contact-modal::backdrop {
+.contact-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 940;
     background-color: rgba(10, 12, 14, 0.75);
     backdrop-filter: blur(4px);
+    animation: backdrop-in 0.25s ease;
+}
+
+.contact-backdrop[hidden] {
+    display: none;
+}
+
+@keyframes backdrop-in {
+    from { opacity: 0; }
+}
+
+/* la page ne défile plus derrière la fenêtre */
+body.modal-open {
+    overflow: hidden;
 }
 
 .contact-modal[open] {
@@ -896,6 +921,33 @@ nav::before {
 .contact-submit:disabled {
     opacity: 0.6;
     cursor: wait;
+}
+
+/* ---------- Bouton « Envoyer » qui se transforme en avion ---------- */
+/* les étapes de l'animation sont jouées en JS (playTakeoff dans script.js) */
+
+/* pendant l'animation : couleurs figées (pas d'effet de survol) et pas de grisé */
+.contact-submit.is-sending,
+.contact-submit.is-sending:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    opacity: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* avion créé au moment de l'envoi, en position fixe pour pouvoir sortir de la fenêtre */
+.flying-plane {
+    position: fixed;
+    z-index: 960;
+    color: var(--color-secondary);
+    pointer-events: none;
+    will-change: transform;
+}
+
+.flying-plane svg {
+    width: 100%;
+    height: 100%;
 }
 
 .contact-status {

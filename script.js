@@ -8,6 +8,7 @@ const openBtn = document.getElementById("open-contact-modal");
 const closeBtn = document.getElementById("close-contact-modal");
 const form = document.getElementById("contact-form");
 const statusEl = document.getElementById("contact-status");
+const backdrop = document.getElementById("contact-backdrop");
 
 function setStatus(message, type) {
     statusEl.textContent = message;
@@ -15,42 +16,168 @@ function setStatus(message, type) {
     if (type) statusEl.classList.add(`is-${type}`);
 }
 
+// Le reste du site est rendu inactif (clavier, clic, lecteur d'écran) pendant l'ouverture.
+// On cible uniquement nos propres éléments : la fenêtre hCaptcha, ajoutée au <body>, doit rester utilisable.
+function pageOutsideModal() {
+    const main = modal.closest("main");
+    return [
+        ...document.querySelectorAll("body > nav, body > footer"),
+        ...[...main.children].filter((el) => el !== modal),
+    ];
+}
+
 // Le modal n'existe que sur l'accueil : on ne branche rien sur les autres pages
 if (modal) {
+    let inertElements = [];
+
+    // On utilise show() et pas showModal() : showModal() place la fenêtre au-dessus de tout,
+    // y compris la fenêtre de vérification hCaptcha, qui se retrouvait cachée derrière.
+    // Le fond, le blocage de la page et la touche Échap sont donc gérés ici.
     openBtn.addEventListener("click", () => {
         setStatus("");
-        modal.showModal();
+        inertElements = pageOutsideModal();
+        inertElements.forEach((el) => (el.inert = true));
+        backdrop.hidden = false;
+        document.body.classList.add("modal-open");
+        modal.show();
+        form.querySelector("input:not([type=hidden]):not([type=checkbox])").focus();
+    });
+
+    modal.addEventListener("close", () => {
+        inertElements.forEach((el) => (el.inert = false));
+        inertElements = [];
+        backdrop.hidden = true;
+        document.body.classList.remove("modal-open");
+        openBtn.focus();
     });
 
     closeBtn.addEventListener("click", () => {
         modal.close();
     });
 
-    // Fermer en cliquant à l'extérieur de la fenêtre
-    modal.addEventListener("click", (event) => {
-        if (event.target === modal) {
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.open) {
             modal.close();
         }
     });
+
+    const PLANE_SVG =
+        '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">' +
+        '<path transform="rotate(90 12 12)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
+
+    // Le bouton se rétracte en carré, se transforme en avion, puis l'avion roule et décolle.
+    // Renvoie une promesse résolue à la fin du vol (tout de suite si les animations sont réduites).
+    async function playTakeoff(button) {
+        button.classList.add("is-sending");
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const { width: w, height: h } = button.getBoundingClientRect();
+        const opts = (duration, easing, delay = 0) => ({ duration, easing, delay, fill: "forwards" });
+
+        // 1. le texte s'efface et le bouton se resserre en carré, centré sur lui-même
+        button.animate([{ color: "transparent" }], opts(150, "ease-out"));
+        await button.animate(
+            [{ width: `${w}px`, marginLeft: "0px" }, { width: `${h}px`, marginLeft: `${(w - h) / 2}px` }],
+            opts(350, "cubic-bezier(.6,0,.3,1)", 100)
+        ).finished;
+
+        // 2. le carré devient un avion (élément fixe, pour pouvoir sortir de la fenêtre)
+        const square = button.getBoundingClientRect();
+        const plane = document.createElement("div");
+        plane.className = "flying-plane";
+        plane.innerHTML = PLANE_SVG;
+        Object.assign(plane.style, {
+            left: `${square.left}px`,
+            top: `${square.top}px`,
+            width: `${square.width}px`,
+            height: `${square.height}px`,
+        });
+        document.body.appendChild(plane);
+
+        button.animate([{ opacity: 0, transform: "scale(.6)" }], opts(200, "ease-in"));
+        await plane.animate(
+            [{ opacity: 0, transform: "scale(.4) rotate(-90deg)" }, { opacity: 1, transform: "scale(1) rotate(0)" }],
+            opts(300, "cubic-bezier(.3,1.4,.5,1)")
+        ).finished;
+
+        // 3. roulage puis décollage vers le haut à droite, jusqu'à sortir de l'écran
+        const runway = Math.min(160, window.innerWidth - square.right - 20);
+        const climbX = window.innerWidth - square.left + 100;
+        const climbY = square.bottom + 100;
+        await plane.animate(
+            [
+                { transform: "translate(0, 0) rotate(0)", easing: "cubic-bezier(.5,0,1,1)" },
+                { transform: `translate(${Math.max(runway, 60)}px, 0) rotate(0)`, offset: 0.35, easing: "ease-in-out" },
+                { transform: `translate(${Math.max(runway, 60) + 50}px, -8px) rotate(-18deg)`, offset: 0.5, easing: "ease-in" },
+                { transform: `translate(${climbX}px, -${climbY}px) rotate(-28deg) scale(.7)` },
+            ],
+            opts(1300)
+        ).finished;
+
+        plane.remove();
+    }
+
+    // Après un envoi réussi : la fenêtre s'envole vers le haut (comme l'avion) et le fond s'estompe
+    async function closeAfterSend() {
+        if (!modal.open) return; // déjà fermée par le visiteur
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            const easing = "cubic-bezier(.5,0,.75,0)";
+            backdrop.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, easing: "ease-in", fill: "forwards" });
+            await modal.animate(
+                [
+                    { opacity: 1, transform: "translateY(0) scale(1)" },
+                    { opacity: 1, transform: "translateY(8px) scale(.98)", offset: 0.25 },
+                    { opacity: 0, transform: "translateY(-60px) scale(.92)" },
+                ],
+                { duration: 450, easing }
+            ).finished.catch(() => {});
+        }
+        if (modal.open) modal.close();
+        // on masque le fond avant d'annuler son fondu, pour éviter qu'il réapparaisse une image
+        backdrop.hidden = true;
+        backdrop.getAnimations().forEach((animation) => animation.cancel());
+    }
+
+    // Le bouton réapparaît à sa taille normale
+    function resetButton(button) {
+        button.getAnimations().forEach((animation) => animation.cancel());
+        button.classList.remove("is-sending");
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            button.animate([{ opacity: 0, transform: "scale(.9)" }, { opacity: 1, transform: "scale(1)" }], {
+                duration: 300,
+                easing: "ease-out",
+            });
+        }
+    }
 
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const submitBtn = form.querySelector(".contact-submit");
+
+        // hCaptcha : le jeton est placé dans ce champ une fois le captcha validé
+        const captcha = form.querySelector('textarea[name="h-captcha-response"]');
+        if (captcha && !captcha.value) {
+            setStatus("Merci de valider le captcha avant d'envoyer.", "error");
+            return;
+        }
+
         const data = new FormData(form);
         data.set("subject", `Contact portfolio – ${data.get("name")}`);
 
         submitBtn.disabled = true;
-        submitBtn.textContent = "Envoi…";
         setStatus("");
+        const takeoff = playTakeoff(submitBtn);
 
         try {
-            const response = await fetch(FORM_ENDPOINT, {
+            const request = fetch(FORM_ENDPOINT, {
                 method: "POST",
                 headers: { Accept: "application/json" },
                 body: data,
-            });
-            const result = await response.json();
+            }).then(async (response) => ({ response, result: await response.json() }));
+
+            // on attend la fin du décollage ET la réponse du serveur
+            const [{ response, result }] = await Promise.all([request, takeoff]);
 
             if (!response.ok || !result.success) {
                 throw new Error(result.message || "Échec de l'envoi");
@@ -58,12 +185,15 @@ if (modal) {
 
             setStatus("Merci, ton message a bien été envoyé !", "success");
             form.reset();
-            setTimeout(() => modal.close(), 2000);
+            setTimeout(closeAfterSend, 800);
         } catch (error) {
             setStatus("Oups, l'envoi a échoué. Réessaie dans un instant.", "error");
         } finally {
+            // un jeton hCaptcha ne sert qu'une fois : on réinitialise le widget
+            if (window.hcaptcha) window.hcaptcha.reset();
+            await takeoff.catch(() => {});
+            resetButton(submitBtn);
             submitBtn.disabled = false;
-            submitBtn.textContent = "Envoyer";
         }
     });
 }
