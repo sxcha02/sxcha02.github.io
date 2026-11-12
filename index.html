@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sacha — Développeur web & mobile</title>
-    <meta name="description" content="Portfolio de Sacha, étudiant en licence professionnelle Projet Web : des interfaces web et mobiles simples, minimalistes et centrées sur l'expérience utilisateur.">
+    <!-- Écran de chargement : seulement à la première page ouverte (voir script.js) -->
+    <script>try{if(!sessionStorage.getItem("site-loaded"))document.documentElement.classList.add("is-loading")}catch(e){}</script>
+    <title data-i18n="meta.home.title">Sacha — Développeur web & mobile</title>
+    <meta name="description" data-i18n-attr="content:meta.home.description" content="Portfolio de Sacha, étudiant en licence professionnelle Projet Web : des interfaces web et mobiles simples, minimalistes et centrées sur l'expérience utilisateur.">
     <meta name="theme-color" content="#13171A">
 
     <!-- Aperçu lors d'un partage (LinkedIn, Discord, WhatsApp…).
@@ -53,12 +55,14 @@
     <nav>
         <div class="nav-logo"><a href="#" class="nav-logo-link" aria-label="Sacha — accueil"><svg class="nav-logo-svg" viewBox="263.17 216.27 352.97 91.12" fill="currentColor" aria-hidden="true" focusable="false"><path d="M289.24,307.39c-3.39,0-6.72-.46-9.99-1.37-3.27-.91-6.27-2.17-9-3.79-2.73-1.61-5.09-3.58-7.08-5.9l9.68-9.81c2.07,2.32,4.47,4.06,7.2,5.21,2.73,1.16,5.75,1.74,9.06,1.74,2.65,0,4.65-.37,6.02-1.12,1.37-.74,2.05-1.86,2.05-3.35,0-1.65-.73-2.94-2.17-3.85-1.45-.91-3.33-1.68-5.65-2.3-2.32-.62-4.74-1.32-7.26-2.11-2.53-.79-4.95-1.82-7.26-3.1-2.32-1.28-4.2-3.06-5.65-5.34-1.45-2.27-2.17-5.23-2.17-8.88s.93-7.12,2.79-9.93c1.86-2.81,4.53-5.01,8.01-6.58,3.48-1.57,7.57-2.36,12.29-2.36,4.97,0,9.45.87,13.47,2.61,4.01,1.74,7.34,4.34,9.99,7.82l-9.81,9.81c-1.82-2.23-3.87-3.85-6.14-4.84-2.28-.99-4.74-1.49-7.39-1.49-2.4,0-4.24.37-5.52,1.12-1.28.75-1.92,1.78-1.92,3.1,0,1.49.72,2.65,2.17,3.48,1.45.83,3.33,1.55,5.65,2.17,2.32.62,4.74,1.32,7.26,2.11,2.52.79,4.92,1.88,7.2,3.29,2.27,1.41,4.14,3.27,5.59,5.59,1.45,2.32,2.17,5.3,2.17,8.94,0,5.88-2.11,10.53-6.33,13.96-4.22,3.44-9.97,5.15-17.25,5.15Z"/><path d="M348.58,307.26c-5.46,0-10.39-1.37-14.77-4.1-4.39-2.73-7.82-6.46-10.3-11.17-2.48-4.72-3.72-10.01-3.72-15.89s1.24-11.3,3.72-16.01c2.48-4.72,5.92-8.44,10.3-11.17,4.39-2.73,9.31-4.1,14.77-4.1,4.3,0,8.15.87,11.54,2.61,3.39,1.74,6.1,4.16,8.13,7.26,2.03,3.1,3.12,6.6,3.29,10.49v21.6c-.17,3.97-1.26,7.49-3.29,10.55-2.03,3.06-4.74,5.48-8.13,7.26-3.39,1.78-7.24,2.67-11.54,2.67ZM351.56,292.24c4.55,0,8.23-1.51,11.05-4.53,2.81-3.02,4.22-6.93,4.22-11.73,0-3.14-.64-5.94-1.92-8.38-1.28-2.44-3.06-4.34-5.34-5.71-2.28-1.37-4.95-2.05-8.01-2.05s-5.61.68-7.88,2.05c-2.28,1.37-4.06,3.27-5.34,5.71-1.28,2.44-1.92,5.23-1.92,8.38s.64,6.06,1.92,8.5c1.28,2.44,3.06,4.34,5.34,5.71,2.28,1.37,4.9,2.05,7.88,2.05ZM365.95,306.02v-16.14l2.61-14.65-2.61-14.4v-14.77h16.14v59.96h-16.14Z"/><path d="M424.55,307.26c-6.13,0-11.63-1.37-16.51-4.1-4.88-2.73-8.73-6.46-11.54-11.17-2.81-4.72-4.22-10.01-4.22-15.89s1.41-11.3,4.22-16.01c2.81-4.72,6.68-8.46,11.61-11.23,4.92-2.77,10.41-4.16,16.45-4.16,4.72,0,9.06.87,13.03,2.61,3.97,1.74,7.41,4.22,10.3,7.45l-10.43,10.55c-1.57-1.74-3.46-3.06-5.65-3.97-2.19-.91-4.61-1.37-7.26-1.37-2.98,0-5.65.68-8.01,2.05-2.36,1.37-4.22,3.23-5.59,5.59s-2.05,5.15-2.05,8.38.68,5.94,2.05,8.38c1.37,2.44,3.23,4.34,5.59,5.71,2.36,1.37,5.03,2.05,8.01,2.05,2.73,0,5.19-.48,7.39-1.43,2.19-.95,4.08-2.34,5.65-4.16l10.55,10.55c-3.06,3.31-6.58,5.83-10.55,7.57-3.97,1.74-8.32,2.61-13.03,2.61Z"/><path d="M457.07,306.02v-89.75h16.26v89.75h-16.26ZM497.41,306.02v-34.38c0-3.56-1.12-6.46-3.35-8.69s-5.13-3.35-8.69-3.35c-2.32,0-4.39.5-6.21,1.49-1.82.99-3.25,2.4-4.28,4.22-1.04,1.82-1.55,3.93-1.55,6.33l-6.33-3.23c0-4.72.99-8.83,2.98-12.35,1.99-3.52,4.74-6.27,8.25-8.25,3.52-1.99,7.55-2.98,12.1-2.98s8.58.99,12.1,2.98c3.52,1.99,6.27,4.72,8.25,8.19s2.98,7.49,2.98,12.04v37.98h-16.26Z"/><path d="M551.66,307.26c-5.46,0-10.39-1.37-14.77-4.1-4.39-2.73-7.82-6.46-10.3-11.17-2.48-4.72-3.72-10.01-3.72-15.89s1.24-11.3,3.72-16.01c2.48-4.72,5.92-8.44,10.3-11.17,4.38-2.73,9.31-4.1,14.77-4.1,4.3,0,8.15.87,11.54,2.61,3.39,1.74,6.1,4.16,8.13,7.26,2.03,3.1,3.12,6.6,3.29,10.49v21.6c-.17,3.97-1.26,7.49-3.29,10.55-2.03,3.06-4.74,5.48-8.13,7.26-3.39,1.78-7.24,2.67-11.54,2.67ZM554.63,292.24c4.55,0,8.23-1.51,11.05-4.53,2.81-3.02,4.22-6.93,4.22-11.73,0-3.14-.64-5.94-1.92-8.38-1.28-2.44-3.06-4.34-5.34-5.71-2.28-1.37-4.95-2.05-8.01-2.05s-5.61.68-7.88,2.05c-2.28,1.37-4.06,3.27-5.34,5.71-1.28,2.44-1.92,5.23-1.92,8.38s.64,6.06,1.92,8.5c1.28,2.44,3.06,4.34,5.34,5.71,2.28,1.37,4.9,2.05,7.88,2.05ZM569.03,306.02v-16.14l2.61-14.65-2.61-14.4v-14.77h16.14v59.96h-16.14Z"/><rect x="595.53" y="284.4" width="20.61" height="20.61"/></svg></a></div>
         <ul class="nav-links" id="nav-links">
-            <li class="nav-about"><a href="#short-description">À propos</a></li>
-            <li class="nav-vision"><a href="#vision">Vision</a></li>
-            <li class="nav-schools"><a href="#parcours">Parcours</a></li>
-            <li class="nav-projects"><a href="#projects">Projets</a></li>
-            <li class="nav-resources"><a href="pages/resources/resources.html">Ressources</a></li>
-            <li class="nav-contact"><a href="#contact">Contact</a></li>
+            <li class="nav-about"><a href="#short-description" data-i18n="nav.about">À propos</a></li>
+            <li class="nav-vision"><a href="#vision" data-i18n="nav.vision">Vision</a></li>
+            <li class="nav-schools"><a href="#parcours" data-i18n="nav.parcours">Parcours</a></li>
+            <li class="nav-projects"><a href="#projects" data-i18n="nav.projects">Projets</a></li>
+            <li class="nav-resources"><a href="pages/resources/resources.html" data-i18n="nav.resources">Ressources</a></li>
+            <li class="nav-contact"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            <!-- bouton FR / EN : géré par i18n.js -->
+            <li class="nav-lang"><button type="button" class="lang-toggle">EN</button></li>
         </ul>
         <button type="button" class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
             <span></span>
@@ -77,95 +81,116 @@
             </picture>
             <div class="main-hero-content">
                 <p class="main-hero-label">Sacha — Portfolio</p>
-                <h1 class="main-hero-title">Développeur web &amp; mobile</h1>
-                <p class="main-hero-description">Étudiant en licence pro Projet Web. Je conçois des interfaces simples, utiles et soignées.</p>
+                <h1 class="main-hero-title" data-i18n="hero.title">Développeur web &amp; mobile</h1>
+                <p class="main-hero-description" data-i18n="hero.description">Étudiant en licence pro Projet Web. Je conçois des interfaces simples, utiles et soignées.</p>
             </div>
-            <a href="#short-description" class="hero-scroll" aria-label="Défiler vers l'introduction">
+            <a href="#short-description" class="hero-scroll" data-magnetic data-i18n-attr="aria-label:hero.scroll" aria-label="Défiler vers l'introduction">
                 <span class="hero-scroll-text">Scroll</span>
                 <span class="hero-scroll-line" aria-hidden="true"></span>
             </a>
         </div>
-        <section class="short-description" id="short-description">
-            <h2 class="short-description-title">Introduction</h2>
-            <p class="short-description-content">Je m'appelle <strong class="highlight highlight--scramble">Sacha</strong>, je suis un étudiant en <strong class="highlight highlight--underline">Licence professionnelle Projet Web</strong>.</p>
-        </section>
-        <section class="vision" id="vision">
-            <h2 class="section-title">Vision</h2>
-            <div class="vision-content">
-                <blockquote class="vision-quote">
-                    <p>« Less, but better. »</p>
-                    <cite>Dieter Rams</cite>
-                </blockquote>
-                <!-- Une ligne par idée : copie un <li> pour en ajouter une -->
-                <ol class="vision-list">
-                    <li class="vision-item">
-                        <h3 class="vision-item-title">Minimalisme</h3>
-                        <p class="vision-item-text">Retirer jusqu'à ce qu'il ne reste que l'essentiel. Chaque élément à l'écran doit avoir une raison d'être, le reste n'est que du bruit.</p>
-                    </li>
-                    <li class="vision-item">
-                        <h3 class="vision-item-title">Simplicité</h3>
-                        <p class="vision-item-text">Simple ne veut pas dire facile. C'est le résultat d'un vrai travail : comprendre le problème assez bien pour en proposer la solution la plus claire.</p>
-                    </li>
-                    <li class="vision-item">
-                        <h3 class="vision-item-title">Expérience utilisateur</h3>
-                        <p class="vision-item-text">Un beau site qu'on ne comprend pas est un site raté. Je conçois d'abord pour celles et ceux qui l'utilisent : lisible, accessible, fluide.</p>
-                    </li>
-                </ol>
-            </div>
-        </section>
-        <section class="schools" id="parcours">
-            <h2 class="schools-title">Mon parcours</h2>
-            <div class="schools-list">
-                <article class="school-card">
-                    <span class="school-badge school-badge--done">Terminé</span>
-                    <h3 class="school-name">IUT de Cachan</h3>
-                    <p class="school-degree">DUT Génie Électrique et Informatique Industrielle</p>
-                    <p class="school-dates">2020 – 2023</p>
-                    <p class="school-description">Formation technologique axée sur la conception, l'analyse et la maîtrise des systèmes électroniques et automatismes.</p>
-                </article>
-                <article class="school-card">
-                    <span class="school-badge school-badge--current">En cours</span>
-                    <h3 class="school-name">CFA des Sciences</h3>
-                    <p class="school-degree">Licence professionnelle Projet Web</p>
-                    <p class="school-dates">2026 – aujourd'hui</p>
-                    <p class="school-description">Forme des apprentis à l'ensemble du cycle de vie des applications web et mobiles, de la conception UX/UI au développement full-stack et à la gestion de projet agile.</p>
-                </article>
-            </div>
-        </section>
-        <section class="projects" id="projects">
-            <h2 class="section-title">Projets</h2>
-            <div class="projects-list">
-                <article class="project-card">
-                    <h3 class="project-name">PodApp</h3>
-                    <p class="project-tech">TypeScript · React Native · Rust · SQLite</p>
-                    <p class="project-description">Application de bureau hors ligne, pour un seul podologue sur un seul PC, qui regroupe l'agenda, les dossiers patients, les consultations, les ordonnances, le livre des recettes et la traçabilité de la stérilisation.</p>
-                    <a href="https://github.com/sxcha02/podoApp" class="project-link">Voir le projet →</a>
-                </article>
-                <article class="project-card">
-                    <h3 class="project-name">Nom du projet</h3>
-                    <p class="project-tech">Technologies utilisées</p>
-                    <p class="project-description">Courte description du projet.</p>
-                    <a href="#" class="project-link">Voir le projet →</a>
-                </article>
-                <article class="project-card">
-                    <h3 class="project-name">Nom du projet</h3>
-                    <p class="project-tech">Technologies utilisées</p>
-                    <p class="project-description">Courte description du projet.</p>
-                    <a href="#" class="project-link">Voir le projet →</a>
-                </article>
-            </div>
-        </section>
+        <!-- .pin : la section reste à l'écran le temps que le scroll déroule ses animations -->
+        <div class="pin">
+            <section class="short-description" id="short-description">
+                <h2 class="short-description-title" data-scramble data-i18n="intro.title">Introduction</h2>
+                <p class="short-description-content" data-i18n="intro.text">Je m'appelle <strong class="highlight highlight--scramble">Sacha</strong>, je suis un étudiant en <strong class="highlight highlight--underline">Licence professionnelle Projet Web</strong>.</p>
+            </section>
+        </div>
+        <!-- .pin : la section reste à l'écran le temps que le scroll déroule ses animations -->
+        <div class="pin">
+            <section class="vision" id="vision">
+                <h2 class="section-title" data-scramble data-i18n="vision.title">Vision</h2>
+                <div class="vision-content">
+                    <blockquote class="vision-quote">
+                        <p data-step>« Less, but better. »</p>
+                        <cite data-step>Dieter Rams</cite>
+                    </blockquote>
+                    <!-- Une ligne par idée : copie un <li> pour en ajouter une -->
+                    <ol class="vision-list">
+                        <li class="vision-item">
+                            <h3 class="vision-item-title" data-i18n="vision.1.title">Minimalisme</h3>
+                            <p class="vision-item-text" data-i18n="vision.1.text">Retirer jusqu'à ce qu'il ne reste que l'essentiel. Chaque élément à l'écran doit avoir une raison d'être, le reste n'est que du bruit.</p>
+                        </li>
+                        <li class="vision-item">
+                            <h3 class="vision-item-title" data-i18n="vision.2.title">Simplicité</h3>
+                            <p class="vision-item-text" data-i18n="vision.2.text">Simple ne veut pas dire facile. C'est le résultat d'un vrai travail : comprendre le problème assez bien pour en proposer la solution la plus claire.</p>
+                        </li>
+                        <li class="vision-item">
+                            <h3 class="vision-item-title" data-i18n="vision.3.title">Expérience utilisateur</h3>
+                            <p class="vision-item-text" data-i18n="vision.3.text">Un beau site qu'on ne comprend pas est un site raté. Je conçois d'abord pour celles et ceux qui l'utilisent : lisible, accessible, fluide.</p>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+        </div>
+        <!-- .pin : la section reste à l'écran le temps que le scroll déroule ses animations -->
+        <div class="pin">
+            <section class="schools" id="parcours">
+                <h2 class="schools-title" data-scramble data-i18n="schools.title">Mon parcours</h2>
+                <div class="schools-list">
+                    <article class="school-card">
+                        <span class="school-badge school-badge--done" data-i18n="schools.done">Terminé</span>
+                        <h3 class="school-name">IUT de Cachan</h3>
+                        <p class="school-degree" data-i18n="schools.1.degree">DUT Génie Électrique et Informatique Industrielle</p>
+                        <p class="school-dates">2020 – 2023</p>
+                        <p class="school-description" data-i18n="schools.1.text">Formation technologique axée sur la conception, l'analyse et la maîtrise des systèmes électroniques et automatismes.</p>
+                    </article>
+                    <article class="school-card">
+                        <span class="school-badge school-badge--current" data-i18n="schools.current">En cours</span>
+                        <h3 class="school-name">CFA des Sciences</h3>
+                        <p class="school-degree" data-i18n="schools.2.degree">Licence professionnelle Projet Web</p>
+                        <p class="school-dates" data-i18n="schools.2.dates">2026 – aujourd'hui</p>
+                        <p class="school-description" data-i18n="schools.2.text">Forme des apprentis à l'ensemble du cycle de vie des applications web et mobiles, de la conception UX/UI au développement full-stack et à la gestion de projet agile.</p>
+                    </article>
+                </div>
+            </section>
+        </div>
+        <!-- .pin : la section reste à l'écran le temps que le scroll déroule ses animations -->
+        <div class="pin">
+            <section class="projects" id="projects">
+                <h2 class="section-title" data-scramble data-i18n="projects.title">Projets</h2>
+                <div class="projects-list">
+                    <!-- data-preview : capture affichée au survol (ordinateur). Dépose les images dans src/img/projects/ -->
+                    <article class="project-card" data-cursor="cursor.view" data-preview="src/img/projects/podapp.webp">
+                        <h3 class="project-name">PodApp</h3>
+                        <p class="project-tech">TypeScript · React Native · Rust · SQLite</p>
+                        <p class="project-description" data-i18n="projects.podapp.text">Application de bureau hors ligne, pour un seul podologue sur un seul PC, qui regroupe l'agenda, les dossiers patients, les consultations, les ordonnances, le livre des recettes et la traçabilité de la stérilisation.</p>
+                        <a href="pages/projects/podapp.html" class="project-link" data-i18n="projects.view">Voir le projet →</a>
+                    </article>
+                    <article class="project-card" data-cursor="cursor.view" data-preview="src/img/projects/projet-2.webp">
+                        <h3 class="project-name" data-i18n="projects.placeholder.name">Nom du projet</h3>
+                        <p class="project-tech" data-i18n="projects.placeholder.tech">Technologies utilisées</p>
+                        <p class="project-description" data-i18n="projects.placeholder.text">Courte description du projet.</p>
+                        <a href="pages/projects/projet-2.html" class="project-link" data-i18n="projects.view">Voir le projet →</a>
+                    </article>
+                    <article class="project-card" data-cursor="cursor.view" data-preview="src/img/projects/projet-3.webp">
+                        <h3 class="project-name" data-i18n="projects.placeholder.name">Nom du projet</h3>
+                        <p class="project-tech" data-i18n="projects.placeholder.tech">Technologies utilisées</p>
+                        <p class="project-description" data-i18n="projects.placeholder.text">Courte description du projet.</p>
+                        <a href="pages/projects/projet-3.html" class="project-link" data-i18n="projects.view">Voir le projet →</a>
+                    </article>
+                </div>
+            </section>
+        </div>
         <section class="contact" id="contact">
-            <h2 class="section-title">Contact</h2>
-            <p class="contact-text">Une question, une opportunité d'alternance ou de projet ? Écris-moi.</p>
-            <button type="button" class="contact-button" id="open-contact-modal">Me contacter</button>
+            <h2 class="section-title" data-scramble data-i18n="contact.title">Contact</h2>
+            <p class="contact-text" data-i18n="contact.text">Une question, une opportunité d'alternance ou de projet ? Écris-moi.</p>
+            <div class="contact-actions">
+                <button type="button" class="contact-button" id="open-contact-modal" data-magnetic data-i18n="contact.open">Me contacter</button>
+                <!-- Remplace l'adresse dans data-email par la tienne -->
+                <button type="button" class="contact-button contact-button--ghost" id="copy-email" data-email="ton.email@exemple.fr" data-magnetic>
+                    <span class="copy-email-label" data-i18n="contact.copy">Copier mon email</span>
+                </button>
+                <!-- Dépose ton CV dans src/docs/ sous le nom cv-sacha.pdf -->
+                <a href="src/docs/cv-sacha.pdf" class="contact-button contact-button--ghost" download data-magnetic data-i18n="contact.cv">Télécharger mon CV</a>
+            </div>
         </section>
 
         <dialog class="contact-modal" id="contact-modal" aria-labelledby="contact-modal-title">
             <form class="contact-form" id="contact-form">
                 <div class="contact-modal-header">
-                    <h2 class="contact-modal-title" id="contact-modal-title">Me contacter</h2>
-                    <button type="button" class="contact-modal-close" id="close-contact-modal" aria-label="Fermer">&times;</button>
+                    <h2 class="contact-modal-title" id="contact-modal-title" data-i18n="contact.open">Me contacter</h2>
+                    <button type="button" class="contact-modal-close" id="close-contact-modal" data-i18n-attr="aria-label:contact.close" aria-label="Fermer">&times;</button>
                 </div>
 
                 <!-- Web3Forms : clé d'accès publique (https://web3forms.com) -->
@@ -176,7 +201,7 @@
                 <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                 <label class="contact-field">
-                    <span>Nom</span>
+                    <span data-i18n="contact.name">Nom</span>
                     <input type="text" name="name" required autocomplete="name">
                 </label>
                 <label class="contact-field">
@@ -191,7 +216,7 @@
                 <!-- hCaptcha géré par Web3Forms (pas de clé à fournir) -->
                 <div class="h-captcha" data-captcha="true" data-theme="dark" data-lang="fr"></div>
 
-                <button type="submit" class="contact-button contact-submit">Envoyer</button>
+                <button type="submit" class="contact-button contact-submit" data-i18n="contact.send">Envoyer</button>
                 <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
             </form>
         </dialog>
@@ -206,8 +231,10 @@
                 <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="footer-social-icon" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true" focusable="false"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a></li>
             </ul>
         </div>
-        <p class="footer-copy">&copy; <span id="footer-year"></span> Sacha — Tous droits réservés</p>
+        <p class="footer-copy">&copy; <span id="footer-year"></span> Sacha — <span data-i18n="footer.rights">Tous droits réservés</span></p>
     </footer>
+    <!-- i18n.js avant les autres scripts : la page est traduite avant d'être animée -->
+    <script src="i18n.js"></script>
     <script src="https://web3forms.com/client/script.js" async defer></script>
     <script src="script.js"></script>
 </body>
